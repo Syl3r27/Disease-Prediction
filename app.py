@@ -2,12 +2,15 @@ import pandas as pd
 from flask import Flask, render_template, request, url_for, flash, redirect
 import joblib
 import os
+
+
 app = Flask(__name__)
 
 # Load models and symptom vocab once on startup
 model = joblib.load('./models/model.pkl')
 label_encoder = joblib.load('./models/label_encoder.pkl')
 symptom_list = joblib.load('./models/symptom_vocab.pkl')
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -61,4 +64,4 @@ def predict_page():
     return render_template('predict.html', symptoms_list=symptom_list, prediction=prediction)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
+    app.run()
